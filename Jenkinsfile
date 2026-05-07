@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'NodeJS'
+    }
+
     environment {
         EMAIL_TO = 'anjaliitspark@gmail.com'
     }
