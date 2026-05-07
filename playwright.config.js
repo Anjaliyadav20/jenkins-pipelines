@@ -1,36 +1,36 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-    reporter: [['html', { open: 'never' }]],
-}); import { defineConfig } from '@playwright/test';
 
-export default defineConfig({
-    // 2 seconds का timeout हर test के लिए
+    // 30 seconds timeout
     timeout: 30 * 1000,
 
-    // 3 बार retry करो अगर test fail हो
+    // Retry failed tests once
     retries: 1,
 
-    // Reporters configuration
+    // Reporters
     reporter: [
-        ['html', { open: 'never' }],  // HTML report generate करो
-        ['list'],  // Console में list format में दिखाओ
-        ['junit', { outputFile: 'test-results/junit.xml' }]  // JUnit format (Jenkins के लिए)
+        ['html', { open: 'never' }],
+        ['list'],
+        ['junit', { outputFile: 'test-results/junit.xml' }]
     ],
 
-    // Browser configuration
+    // Browser settings
     use: {
-        // हर action के बाद screenshot ले
+
+        // Screenshot on failure
         screenshot: 'only-on-failure',
-        // Video record करो
+
+        // Video on failure
         video: 'retain-on-failure',
-        // Trace record करो (debugging के लिए)
+
+        // Trace for debugging
         trace: 'on-first-retry',
     },
 
-    // Test directory
+    // Test folder
     testDir: 'tests',
 
-    // Parallel में tests चलाएँ
+    // Parallel execution
     workers: 2,
 });
