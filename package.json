@@ -1,8 +1,12 @@
 {
   "name": "qa-ci-cd-demo",
   "version": "1.0.0",
+  "description": "QA Automation with Playwright and Jenkins CI/CD",
   "scripts": {
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test:debug": "npx playwright test --debug",
+    "test:ui": "npx playwright test --ui",
+    "test:headed": "npx playwright test --headed"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0"
