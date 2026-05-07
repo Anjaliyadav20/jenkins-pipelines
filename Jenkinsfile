@@ -41,7 +41,7 @@ pipeline {
             echo '❌ Tests failed! Sending email...'
             mail to: "${EMAIL_TO}",
                  subject: "❌ Test Failed - Build #${env.BUILD_NUMBER}",
-                 body: "Tests failed!\n\nBuild URL: ${env.BUILD_URL}"
+                 body: "Tests failed!\n\nBuild URL: ${env.BUILD_URL}\n\nPlease check the console output."
         }
 
         success {
