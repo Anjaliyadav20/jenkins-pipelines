@@ -9,7 +9,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo '📥 Pulling code from GitHub...'
-                git 'https://github.com/Anjaliyadav20/jenkins-pipelines.git'
+                git branch: 'main',
+                    url: 'https://github.com/Anjaliyadav20/jenkins-pipelines.git'
             }
         }
 
@@ -34,18 +35,13 @@ pipeline {
         always {
             echo '📊 Archiving test reports...'
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
-            publishHTML([
-                reportDir: 'playwright-report',
-                reportFiles: 'index.html',
-                reportName: 'Playwright Test Report'
-            ])
         }
 
         failure {
             echo '❌ Tests failed! Sending email...'
             mail to: "${EMAIL_TO}",
                  subject: "❌ Test Failed - Build #${env.BUILD_NUMBER}",
-                 body: "Tests failed!\n\nBuild URL: ${env.BUILD_URL}\n\nCheck the report for details."
+                 body: "Tests failed!\n\nBuild URL: ${env.BUILD_URL}"
         }
 
         success {
