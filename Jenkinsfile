@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        EMAIL_TO = 'your-email@gmail.com'
+        EMAIL_TO = 'anjaliitspark@gmail.com'
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-repo.git'
+                git 'https://github.com/Anjaliyadav20/jenkins-pipelines.git'
             }
         }
 
