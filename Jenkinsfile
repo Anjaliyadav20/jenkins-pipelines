@@ -6,7 +6,6 @@ pipeline {
     }
 
     stages {
-        // Stage 1: GitHub से code लाओ
         stage('Checkout') {
             steps {
                 echo '📥 Pulling code from GitHub...'
@@ -14,32 +13,27 @@ pipeline {
             }
         }
 
-        // Stage 2: Dependencies install करो
         stage('Install') {
             steps {
                 echo '📦 Installing dependencies...'
-                bat 'npm install'  // ← Windows के लिए 'sh' की जगह 'bat'
+                bat 'npm install'
                 echo '🎭 Installing Playwright browsers...'
-                bat 'npx playwright install'  // ← Windows के लिए 'bat'
+                bat 'npx playwright install'
             }
         }
 
-        // Stage 3: Tests चलाओ
         stage('Run Tests') {
             steps {
                 echo '🧪 Running Playwright tests...'
-                bat 'npx playwright test'  // ← Windows के लिए 'bat'
+                bat 'npx playwright test'
             }
         }
     }
 
-    // Build complete होने के बाद
     post {
-        // हमेशा चलेगा (success हो या fail)
         always {
             echo '📊 Archiving test reports...'
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
-            // Report को publish करो
             publishHTML([
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
@@ -47,7 +41,6 @@ pipeline {
             ])
         }
 
-        // Test fail हो गया
         failure {
             echo '❌ Tests failed! Sending email...'
             mail to: "${EMAIL_TO}",
@@ -55,7 +48,6 @@ pipeline {
                  body: "Tests failed!\n\nBuild URL: ${env.BUILD_URL}\n\nCheck the report for details."
         }
 
-        // Test pass हो गया
         success {
             echo '✅ All tests passed!'
             mail to: "${EMAIL_TO}",
